@@ -4,7 +4,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 // See https://aka.ms/new-console-template for more information
-int countIteration = 500;
+int countIteration = 1000;
 var sw = new Stopwatch();
 var mc = new F() { i1 = 1, i2 = 2, i3 = 3, i4 = 4, i5 = 5 };// new MyClass();
 string str = string.Empty;
@@ -15,31 +15,33 @@ for (var i = 1; i <= countIteration; i++)
 }
 str = str[0..^1];
 sw.Stop();
+Console.WriteLine(" My serialized time");
 Console.WriteLine(sw.Elapsed);
-Console.WriteLine(str);
-Console.WriteLine(" My deserialized objects");
-sw.Start();
+//Console.WriteLine(str);
+sw.Restart();
 var s = MyDeserialize(str); 
 sw.Stop();
+Console.WriteLine(" My deserialized time");
 Console.WriteLine(sw.Elapsed);
-s.ForEach(Console.WriteLine);
+//s.ForEach(Console.WriteLine);
 
 str = string.Empty;
-sw.Start();
+sw.Restart();
 for (var i = 1; i <= countIteration; i++)
 {
     str += $"{JsonConvert.SerializeObject(mc)};";
 }
 str = str[0..^1];
 sw.Stop();
+Console.WriteLine(" Newtonsoft serialized time");
 Console.WriteLine(sw.Elapsed);
-Console.WriteLine(str);
-Console.WriteLine(" Newtonsoft deserialized objects");
-sw.Start();
+//Console.WriteLine(str);
+sw.Restart();
 s = NewtonsoftDeserialize(str);
 sw.Stop();
+Console.WriteLine(" Newtonsoft deserialized time");
 Console.WriteLine(sw.Elapsed);
-s.ForEach(Console.WriteLine);
+//s.ForEach(Console.WriteLine);
 
 string MySerialize(object obj)
 {
