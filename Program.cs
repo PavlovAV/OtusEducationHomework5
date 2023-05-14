@@ -28,6 +28,27 @@ Console.WriteLine(" My deserialized time");
 Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0}");
 //s.ForEach(Console.WriteLine);
 
+var mySerializeToFile = new MySerializeToFile("MySerializeToFile.csv", mc);
+sw.Restart();
+for (var i = 1; i <= countIteration; i++)
+{
+    str += $"{mySerializeToFile.SerializeObject(mc)};";
+}
+str = str[0..^1];
+sw.Stop();
+mySerializeToFile.CloseFile();
+Console.WriteLine(" My serialized to file time");
+Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0}");
+//Console.WriteLine(str);
+var myDeserializeFromFile = new MyDeserializeFromFile("MySerializeToFile.csv");
+sw.Restart();
+var ser = myDeserializeFromFile.DeserializeObject();
+sw.Stop();
+myDeserializeFromFile.CloseFile();
+Console.WriteLine(" My deserialized from file time");
+Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0}");
+//ser.ForEach(Console.WriteLine);
+
 str = string.Empty;
 sw.Restart();
 for (var i = 1; i <= countIteration; i++)
